@@ -41,7 +41,7 @@ main {
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
   gap: .8rem;
 }
 label {
@@ -93,7 +93,3 @@ tr:hover td { background: #11203f; }
 @media (max-width: 720px) {
   .controls { grid-template-columns: 1fr; }
 }
-
-.reset-btn{background:#0d1730;border:1px solid var(--border);color:var(--text);padding:.45rem .7rem;border-radius:8px;cursor:pointer;}
-.reset-btn:hover{border-color:#5ea1ff;}
-.section-title{display:flex;flex-direction:column;gap:.35rem;}
