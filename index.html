@@ -13,7 +13,7 @@
     <div>
       <p class="eyebrow">Company-level project • NASDAQ supply-chain risk</p>
       <h1>NASDAQ-100 Supply Chain Intelligence</h1>
-      <p class="subtitle">A company-focused dashboard for comparing supplier concentration, regional exposure, critical inputs, logistics pressure, inventory buffers, and supplier network risk.</p>
+      <p class="subtitle">Deep drill-down map from company spend to components, processing, and natural resources with regional and trade-volume exposure.</p>
     </div>
   </header>
 
@@ -31,6 +31,13 @@
           <option value="inventoryWeakness">Inventory Weakness</option>
         </select>
       </label>
+      <label>Flow lens
+        <select id="flowViewSelect">
+          <option value="all">All end-to-end stages</option>
+          <option value="manufacturing">Manufacturing only</option>
+          <option value="materials">Materials & resources</option>
+        </select>
+      </label>
     </section>
 
     <section class="kpi-grid">
@@ -41,54 +48,27 @@
     </section>
 
     <section class="grid-two">
-      <article class="card">
-        <div class="section-title">
-          <h2 id="companyTitle">Company profile</h2>
-          <p id="companyMeta">-</p>
-        </div>
-        <div id="riskRadar" class="viz"></div>
-      </article>
-
-      <article class="card">
-        <div class="section-title">
-          <h2>Company risk ranking</h2>
-          <p>Sorts companies by the selected risk metric.</p>
-        </div>
-        <div id="rankingChart" class="viz"></div>
-      </article>
+      <article class="card"><div class="section-title"><h2 id="companyTitle">Company profile</h2><p id="companyMeta">-</p></div><div id="riskRadar" class="viz"></div></article>
+      <article class="card"><div class="section-title"><h2>Company risk ranking</h2><p>Sorts companies by selected risk metric.</p></div><div id="rankingChart" class="viz"></div></article>
     </section>
 
     <section class="grid-two">
-      <article class="card">
-        <div class="section-title">
-          <h2>Regional supply-chain exposure</h2>
-          <p>Estimated sourcing/production footprint by region.</p>
-        </div>
-        <div id="regionChart" class="viz small"></div>
-      </article>
-
-      <article class="card">
-        <div class="section-title">
-          <h2>Critical inputs</h2>
-          <p>Key bottleneck inputs for the selected company.</p>
-        </div>
-        <div id="inputsList" class="pill-list"></div>
-      </article>
+      <article class="card"><div class="section-title"><h2>Regional exposure and trade volume</h2><p>USD billions by region for selected company.</p></div><div id="regionChart" class="viz small"></div></article>
+      <article class="card"><div class="section-title"><h2>Critical inputs</h2><p>Bottleneck inputs tied to supply risk.</p></div><div id="inputsList" class="pill-list"></div></article>
     </section>
 
     <section class="card">
-      <div class="section-title">
-        <h2>Supplier network map</h2>
-        <p>Prototype view of company-to-supplier relationships and risk clusters.</p>
-      </div>
-      <div id="networkChart" class="viz network"></div>
+      <div class="section-title"><h2>Interactive end-to-end supply chain flow</h2><p>Click nodes to drill from company to supplier country/province, processing stage, and natural resources.</p></div>
+      <div id="sankeyChart" class="viz network"></div>
+    </section>
+
+    <section class="grid-two">
+      <article class="card"><div class="section-title"><h2>Drilldown geography map</h2><p>Click country bars (China split into provinces, Taiwan into cities).</p></div><div id="geoDrillChart" class="viz"></div></article>
+      <article class="card"><div class="section-title"><h2>Trade corridor volume</h2><p>Major route volumes supporting the selected company.</p></div><div id="corridorChart" class="viz"></div></article>
     </section>
 
     <section class="card">
-      <div class="section-title">
-        <h2>Decision table</h2>
-        <p>Use this table to compare companies quickly and explain the supply-chain story.</p>
-      </div>
+      <div class="section-title"><h2>Decision table</h2><p>Top 25 company comparison for risk, region, and annual trade volume.</p></div>
       <div id="companyTable"></div>
     </section>
   </main>
