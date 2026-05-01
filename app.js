@@ -1,3 +1,4 @@
+// Simulated top-25 by market-cap snapshot (refresh periodically)
 const baseCompanies = [
   ['Apple','AAPL','Technology',68,72,84,78,58,41,59],
   ['NVIDIA','NVDA','Technology',74,77,73,89,52,55,45],
@@ -48,6 +49,18 @@ const companies = baseCompanies.map((d, i) => {
 const el = id => document.getElementById(id);
 const companySelect = el('companySelect'); const sectorSelect = el('sectorSelect'); const riskMetricSelect = el('riskMetricSelect'); const flowViewSelect = el('flowViewSelect');
 let geoMode = 'country';
+
+
+const chartIds = ['riskRadar','rankingChart','regionChart','sankeyChart','geoDrillChart','corridorChart'];
+
+function showChartMessage(id, message){
+  const node = el(id);
+  if (node) node.innerHTML = `<div style="display:grid;place-items:center;height:100%;color:#9db0d4;font-size:.92rem;text-align:center;padding:1rem;">${message}</div>`;
+}
+
+function ensurePlotlyReady(){
+  return typeof window.Plotly !== 'undefined';
+}
 
 function populateFilters(){
   companySelect.innerHTML = companies.map(c=>`<option value="${c.ticker}">${c.name} (${c.ticker})</option>`).join('');
@@ -128,10 +141,28 @@ function renderTable(){
 function renderAll(){
   syncCompanySelection();
   const c = selectedCompany();
-  renderKPIs(c); renderRadar(c); renderRanking(); renderRegion(c); renderInputs(c); renderSankey(c); renderGeoDrill(c); renderCorridors(c); renderTable();
+  renderKPIs(c);
+  if (!ensurePlotlyReady()) {
+    chartIds.forEach(id => showChartMessage(id, 'Charts are waiting for Plotly to load. If you opened this file offline, run a local web server or keep internet enabled for CDN assets.'));
+    renderTable();
+    return;
+  }
+  renderRadar(c); renderRanking(); renderRegion(c); renderInputs(c); renderSankey(c); renderGeoDrill(c); renderCorridors(c); renderTable();
 }
 
-populateFilters(); companySelect.value = 'AAPL';
-[companySelect, sectorSelect, riskMetricSelect, flowViewSelect].forEach(e => e.addEventListener('change', renderAll));
-el('geoResetBtn')?.addEventListener('click', () => { geoMode = 'country'; renderGeoDrill(selectedCompany()); });
-renderAll();
+function boot(){
+  populateFilters(); companySelect.value = 'AAPL';
+  [companySelect, sectorSelect, riskMetricSelect, flowViewSelect].forEach(e => e.addEventListener('change', renderAll));
+  el('geoResetBtn')?.addEventListener('click', () => { geoMode = 'country'; renderGeoDrill(selectedCompany()); });
+  renderAll();
+  if (!ensurePlotlyReady()) {
+    let tries = 0;
+    const t = setInterval(() => {
+      tries += 1;
+      if (ensurePlotlyReady()) { clearInterval(t); renderAll(); }
+      if (tries > 20) clearInterval(t);
+    }, 250);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', boot);
