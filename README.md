@@ -19,7 +19,7 @@ The dashboard lets you compare major companies by:
 
 ## Current version
 
-This is a static HTML/CSS/JavaScript prototype that runs directly in the browser. It uses a simulated company dataset so the project works immediately without a backend.
+This is a static HTML/CSS/JavaScript prototype that runs directly in the browser. It now includes a simulated top-25 company dataset, end-to-end Sankey flow mapping down to natural resources, China/Taiwan geographic drilldowns, and trade-volume corridor views without requiring a backend.
 
 ## Files
 
