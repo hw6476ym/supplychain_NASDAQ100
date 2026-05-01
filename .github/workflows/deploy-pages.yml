@@ -2,7 +2,7 @@ name: Deploy static NASDAQ supply-chain dashboard
 
 on:
   push:
-    branches: [ main, work ]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
